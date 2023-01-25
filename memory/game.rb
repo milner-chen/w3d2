@@ -1,10 +1,12 @@
 require_relative './board.rb'
+require_relative './human_player.rb'
 
 class Game
 
     def initialize
         @board = Board.new
         @prev_guess = nil
+        @human_player = HumanPlayer.new
     end
 
     def make_guess(pos)
@@ -34,9 +36,10 @@ class Game
         @board.render
         while @board.won? == false
             @board.render
-            puts "Please enter the position of the card you'd like to flip (e.g., '2,3')"
-            pos = gets.chomp.split(",")
-            pos = pos.map {|x| x.to_i }
+            pos = @human_player.prompt
+            # puts "Please enter the position of the card you'd like to flip (e.g., '2,3')"
+            # pos = gets.chomp.split(",")
+            # pos = pos.map {|x| x.to_i }
             make_guess(pos)
         end
         puts "You won!"
