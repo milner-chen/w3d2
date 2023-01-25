@@ -1,0 +1,92 @@
+class Card
+
+    def initialize(value)
+        @value = value
+        @face_up = false
+    end
+
+    def display
+        @value if @face_up
+    end
+
+    def hide
+        @face_up = false
+    end
+
+    def reveal
+        @face_up = true
+    end
+
+    #to_s, ==
+
+end
+
+---
+
+def Board
+
+    def initialize
+        @grid = Array.new(3) { Array.new(3) }
+    end
+
+    def populate(cards)
+        i = 0
+        @grid.each do |row|
+            row.each do |x|
+                x << cards[i]
+                i += 1
+            end
+        end
+    end
+
+    def render
+        @grid.each do |row|
+            puts row.join(" ")
+        end
+    end
+
+    def won?
+        @grid.all? {|row| row.all? {|c| c.face_up } }
+    end
+
+    def [](pos)
+        x, y = pos
+        @grid[x][y]
+    end
+
+    def reveal(pos)
+        if !@face_up
+            @grid[pos].reveal
+            @grid[pos].display
+        end
+    end
+
+    def update_cards
+        self.repopulate
+    end
+
+end
+
+---
+
+require_relative 'card.rb'
+require_relative 'board.rb'
+
+def Game
+    
+    def initialize
+        @board = Board.new
+        @guessed_pos = []
+    end
+
+    def prompt
+
+    end
+
+    def play
+        @board.render
+
+    end
+
+
+end
